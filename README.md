@@ -38,10 +38,8 @@ Upgrades
         Upgrading between versions: Simply copy over all *.sh files and ddut4_init.def.
         Upgrading from v0.4b to 0.4c: Same procedure + edit ddut4.conf, and remove all lines under the 3rd section (Additional Tweaks).
 
+
 Todo / Wishlist
-
-Todo/wishlist
-
 
         Make start/stop/restart procedures easier (right now you can use launchServer to start, stop, or restart, but it doesn't go into background).
         Add "stop" functionality to ut4wd.sh
