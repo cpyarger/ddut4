@@ -22,7 +22,11 @@ for cnffiles_init in ddut4.conf
                                                 exit 1
                                 #no need for 'else' here
                                 fi
-                                echo "Loaded configuration file: $(pwd)/${cnffiles_init}"
+				if [[ $unatt != '1' ]]
+					then
+						echo "Loaded configuration file: /etc/${cnffiles_init}"
+				fi
+
                         elif [ -f /etc/${cnffiles_init} ]
                                 then
                                         source /etc/${cnffiles_init}
@@ -31,7 +35,10 @@ for cnffiles_init in ddut4.conf
                                                         echo "Couldn't load /etc/${cnffiles_init}. Terminating."
                                                         exit 1
                                         fi
-                                        iecho "Loaded configuration file: /etc/${cnffiles_init}"
+                                        if [[ $unatt != '1' ]]
+				                then
+						echo "Loaded configuration file: /etc/${cnffiles_init}"
+				        fi
 
                         else
                                 echo "Couldn't find ${cnffiles_init}. Terminating."
