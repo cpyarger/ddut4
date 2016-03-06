@@ -1,4 +1,4 @@
-DDRRE's Linux Server Administration & Deployment Suite for UT4
+Linux Server Administration & Deployment Suite for UT4
 
 A set of installation, maintenance, and launcher scripts for GNU/Linux-based Unreal Tournament servers. Written in bash.
 
@@ -51,4 +51,4 @@ Todo / Wishlist
 
 More info and tech deepdive: https://forums.unrealtournament.com/showthread.php?18077-DDUT4-Linux-Server-Administration-amp-Deployment-Suite
 
-Snir Hassidim, 2016
+DDRRE / Snir Hassidim, 2016
