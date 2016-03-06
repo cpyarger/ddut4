@@ -2,10 +2,10 @@ DDRRE's Linux Server Administration & Deployment Suite for UT4
 
 A set of installation, maintenance, and launcher scripts for GNU/Linux-based Unreal Tournament servers. Written in bash.
 
-Install a server or hub from scratch, and update it with a URL whenever a new build is available, with the ability to update the configuration in bulk.
-Edit server configuration files
-Launch / automatically launch & monitor server instances
-Designed to fully support multiple servers on the same machine.
+- Install a server or hub from scratch, and update it with a URL whenever a new build is available, with the ability to update the configuration in bulk.
+- Edit server configuration files
+- Launch / automatically launch & monitor server instances
+- Designed to fully support multiple servers on the same machine.
 
 
 Installation and Configuration Summary
