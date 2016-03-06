@@ -38,6 +38,18 @@ Upgrades
         Upgrading between versions: Simply copy over all *.sh files and ddut4_init.def.
         Upgrading from v0.4b to 0.4c: Same procedure + edit ddut4.conf, and remove all lines under the 3rd section (Additional Tweaks).
 
+Todo / Wishlist
+
+Todo/wishlist
+
+
+        Make start/stop/restart procedures easier (right now you can use launchServer to start, stop, or restart, but it doesn't go into background).
+        Add "stop" functionality to ut4wd.sh
+        Create first-time-wizard to generate INI files
+        Create a hub and attach preconfigured dedicated instances, also deployed by the script (depends on feature support by the game itself, which is currently undetermined).
+        Compare source-INI maplist to user's maplist, if defined, and offer new maps if available
+        Add editEngine.sh and combine to a unified editor (depending on demand, based on comments below) 
+
 
 More info and tech deepdive: https://forums.unrealtournament.com/showthread.php?18077-DDUT4-Linux-Server-Administration-amp-Deployment-Suite
 
