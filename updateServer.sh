@@ -161,10 +161,6 @@ if [ ! -d "$LSDIR" ]
 				read LSDIR
 			done
 fi
-
-## FIXME: Handle LSDIR which doesn't have UnrealTournament in it (but exists, e.g. bad user input)
-
-
 if [[ ! "$basedir" == "$LSDIR" ]]
 	then
 		rm -rf "$basedir"
@@ -188,15 +184,17 @@ for i in $update
 				echo "Sending abort signal to server instance.."
 				kill $prock
 				sleep 5
+				pkcnt=0
 				while kill -0 $prock &>/dev/null
 					do
 						pidclear=0
-						cnt=$(echo "$cnt + 1" | bc)
+						pkcnt=$(echo "$pkcnt + 1" | bc)
 						echo "Sending kill signal to server instance.."
 						kill -9 $prock
 						sleep 1
-						if [[ $cnt -ge 3 ]]
+						if [[ $pkcnt -ge 3 ]]
 							then
+								unset pkcnt
 								break
 						fi
 						pidclear=1

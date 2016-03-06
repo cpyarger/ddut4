@@ -6,8 +6,41 @@
 ### NOTE: EVERYTHING is case sensitive.
 
 ####################################
+# DON'T EDIT THIS SECTION          #
+####################################
 
+#Finding and sourcing ddut4.conf
 
+for cnffiles_init in ddut4.conf
+        do
+                if [ -f "$cnffiles_init" ]
+                        then
+                                source "$cnffiles_init"
+                                if [[ $? != '0' ]]
+                                        then
+                                                echo "Couldn't load ${cnffiles_init}. Terminating."
+                                                exit 1
+                                #no need for 'else' here
+                                fi
+                                echo "Loaded configuration file: $(pwd)/${cnffiles_init}"
+                        elif [ -f /etc/${cnffiles_init} ]
+                                then
+                                        source /etc/${cnffiles_init}
+                                        if [[ $? != '0' ]]
+                                                then
+                                                        echo "Couldn't load /etc/${cnffiles_init}. Terminating."
+                                                        exit 1
+                                        fi
+                                        iecho "Loaded configuration file: /etc/${cnffiles_init}"
+
+                        else
+                                echo "Couldn't find ${cnffiles_init}. Terminating."
+                                exit 1
+                fi
+        done
+
+#########################################
+#					#
 #=======================================#
 #--    OPTIONAL: Additional tweaks    --#
 #=======================================#
@@ -77,36 +110,6 @@ testcnf () {
 }
 
 
-#Finding and sourcing ddut4.conf
-
-for cnffiles_init in ddut4.conf
-        do
-                if [ -f "$cnffiles_init" ]
-                        then
-                                source "$cnffiles_init"
-                                if [[ $? != '0' ]]
-                                        then
-                                                echo "Couldn't load ${cnffiles_init}. Terminating."
-                                                exit 1
-                                #no need for 'else' here
-                                fi
-                                iecho "Loaded configuration file: $(pwd)/${cnffiles_init}"
-                        elif [ -f /etc/${cnffiles_init} ]
-                                then
-                                        source /etc/${cnffiles_init}
-                                        if [[ $? != '0' ]]
-                                                then
-                                                        echo "Couldn't load /etc/${cnffiles_init}. Terminating."
-                                                        exit 1
-                                        fi
-                                        iecho "Loaded configuration file: /etc/${cnffiles_init}"
-
-                        else
-                                echo "Couldn't find ${cnffiles_init}. Terminating."
-                                exit 1
-                fi
-        done
-
 testcnf rootdir basedir cronctl dldir confdir serverproc wdrefresh keepdl cplink
 
 if [[ $srvnames == '' ]]
@@ -131,6 +134,6 @@ for i in $srvnames
 iecho "Servers defined: $srvnames"
 sheader() {
 echo
-echo "DDRRE's UT4 Server Suite v0.4b"
+echo "DDRRE's UT4 Server Suite v0.4c"
 echo "=============================="
 }
