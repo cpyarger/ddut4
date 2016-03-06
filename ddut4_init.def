@@ -1,0 +1,136 @@
+### DDRRE's UT4 Server Suite
+### Initialization Routine File
+
+# Version 0.4c
+
+### NOTE: EVERYTHING is case sensitive.
+
+####################################
+
+
+#=======================================#
+#--    OPTIONAL: Additional tweaks    --#
+#=======================================#
+#Override default advanced settings here#
+#=======================================#
+
+## Where should the base UT4 server skeleton be stored?
+basedir="${rootdir}/ut4-base"
+
+## Set this to 1 to disable the scheduler when updating
+cronctl=0
+
+## Where should the update be downloaded to (temporary)?
+dldir="${rootdir}"
+
+## Where should the updater look for Engine.ini, SRVNAME-Game.ini, SRVNAME-Rules.ini configuration files?
+## If these files are not found, the server's configuration files will not be modified.
+confdir="${rootdir}"
+
+## Change this if the server binary has changed
+serverproc='UE4Server-Linux-Shipping'
+
+## Server watchdog refresh interval (in seconds):
+wdrefresh=30
+
+## Keep downloaded server package? (Not necessary. To re-deploy, just use "install" as the URL to deploy from ut$
+keepdl=0
+
+## Copy using hardlinks (saved space by mirroring the base game package)
+cplink=1
+
+# Inside the upgrade package archive, this should be the directory name with UnrealTournament in it:
+zipdir="LinuxServer"
+
+####################################
+
+
+###################################################
+
+## Initializing configuration and common functions
+
+iecho () {
+	#echo only if interactive
+	if [[ $unatt != '1' ]]
+		then
+			echo "$@"
+	fi
+}
+
+kthxbye () {
+		echo
+		echo "Terminating."
+		exit $1
+}
+
+testcnf () {
+		#generic failure for undefined vars
+		for i in $@
+			do
+				if [[ $1 == '' ]]
+					then
+						echo "$1 not defined. ddut4.conf is not fully configured."
+						echo "The script cannot continue."
+						kthxbye 1
+				fi
+			done
+}
+
+
+#Finding and sourcing ddut4.conf
+
+for cnffiles_init in ddut4.conf
+        do
+                if [ -f "$cnffiles_init" ]
+                        then
+                                source "$cnffiles_init"
+                                if [[ $? != '0' ]]
+                                        then
+                                                echo "Couldn't load ${cnffiles_init}. Terminating."
+                                                exit 1
+                                #no need for 'else' here
+                                fi
+                                iecho "Loaded configuration file: $(pwd)/${cnffiles_init}"
+                        elif [ -f /etc/${cnffiles_init} ]
+                                then
+                                        source /etc/${cnffiles_init}
+                                        if [[ $? != '0' ]]
+                                                then
+                                                        echo "Couldn't load /etc/${cnffiles_init}. Terminating."
+                                                        exit 1
+                                        fi
+                                        iecho "Loaded configuration file: /etc/${cnffiles_init}"
+
+                        else
+                                echo "Couldn't find ${cnffiles_init}. Terminating."
+                                exit 1
+                fi
+        done
+
+testcnf rootdir basedir cronctl dldir confdir serverproc wdrefresh keepdl cplink
+
+if [[ $srvnames == '' ]]
+	then
+		echo "No servers defined."
+		echo "Please define SRVNAMEs in ddut4.conf."
+		kthxbye 1
+fi
+
+for i in $srvnames
+        do
+                add=" ${rootdir}/ut4-$i"
+                update="${update}${add}"
+				if [[ $(eval echo \$${i}_CMD) == '' ]]
+					then
+						echo "No launch command found for $i."
+						echo "Please define ${i}_CMD in the configuration file."
+						kthxbye 1
+				fi
+        done
+
+iecho "Servers defined: $srvnames"
+sheader() {
+echo
+echo "DDRRE's UT4 Server Suite v0.4b"
+echo "=============================="
+}
